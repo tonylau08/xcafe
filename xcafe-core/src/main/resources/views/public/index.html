@@ -1,0 +1,41 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>xacfe's main page</title>
+</head>
+<body>
+
+<h1>xacfe's main page</h1>
+<form action="http://localhost:18898/test/postv.mo" method="post" enctype="multipart/form-data">
+	<input type="text" value="19" name="age">
+	<input type="file" name="upload">
+	<input type="submit">
+</form>
+
+<script type="text/javascript" src="http://localhost:18898/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+
+//postv();
+
+function postv(){
+	var params = {"publicKey":"aaa", "latitude":123, "longitude":456};
+	
+	$.ajax({
+		url : "http://localhost:18898/test/postv.mo",
+		data: params,
+		type: "post",
+		dataType: "json",
+		success: function(result){
+			//alert(result.code);
+			//alert(result.msg);
+			console.log(result);
+		},
+		error: function(result){
+			console.log(result);
+		}
+	})
+}
+</script>
+</body>
+</html>
