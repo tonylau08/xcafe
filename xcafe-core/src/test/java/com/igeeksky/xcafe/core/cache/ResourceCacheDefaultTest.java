@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.igeeksky.xcafe.cache.ResourceCache;
+import com.igeeksky.xcafe.cache.ResourceCacheDefault;
+
 /**
  * 静态资源缓存测试
  * @author Tony.Lau

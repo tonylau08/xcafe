@@ -61,7 +61,7 @@ public class TestController {
 	
 	@ResponseBody
 	@RequestMapping("/postv.mo")
-	public String postv(@RequestParam MultipartFile upload, HttpServletRequest request, String publicKey, Integer latitude, Integer longitude, Integer age) throws IllegalStateException, IOException{
+	public Message postv(@RequestParam MultipartFile upload, HttpServletRequest request, String publicKey, Integer latitude, Integer longitude, Integer age) throws IllegalStateException, IOException{
 		
 		System.out.println(age);
 		System.out.println(publicKey);
@@ -70,7 +70,7 @@ public class TestController {
 
 		upload.transferTo(new File("d:/newsss" + age +".txt"));
 		
-		return "code:1, msg:'ok'";
+		return new Message("keySS", "keyDD");
 	}
 	
 	@RequestMapping("/privatePath.do")

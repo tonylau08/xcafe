@@ -1,4 +1,4 @@
-package com.igeeksky.xcafe.core.cache;
+package com.igeeksky.xcafe.cache;
 
 /**
  * 缓存访问记录

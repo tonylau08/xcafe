@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.igeeksky.xcafe.core.cache.ResourceCache;
-import com.igeeksky.xcafe.core.cache.ResourceCacheDefault;
+import com.igeeksky.xcafe.cache.ResourceCache;
+import com.igeeksky.xcafe.cache.ResourceCacheDefault;
 import com.igeeksky.xcafe.core.context.XcafeCoreContext;
 import com.igeeksky.xcafe.core.tag.ThreadSafe;
 import com.igeeksky.xcafe.util.FileUtils;
