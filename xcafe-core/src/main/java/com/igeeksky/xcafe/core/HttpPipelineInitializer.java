@@ -3,8 +3,6 @@ package com.igeeksky.xcafe.core;
 import java.util.concurrent.ExecutorService;
 
 import com.igeeksky.xcafe.core.handler.HttpServerInboundHandler;
-import com.igeeksky.xcafe.core.handler.WebSocketFrameHandler;
-import com.igeeksky.xcafe.core.handler.WebSocketIndexPageHandler;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -12,8 +10,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpContentCompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 
@@ -23,7 +19,7 @@ public class HttpPipelineInitializer extends ChannelInitializer<SocketChannel> {
 	private final int timeOut;
 	private final ExecutorService executorService;
 	
-	private static final String WEBSOCKET_PATH = "/websocket";
+	//private static final String WEBSOCKET_PATH = "/websocket";
 	
 	public HttpPipelineInitializer(ExecutorService executorService, SslContext sslCtx, int timeOut){
 		this.executorService = executorService;
@@ -50,13 +46,7 @@ public class HttpPipelineInitializer extends ChannelInitializer<SocketChannel> {
         /** websocket */
         
 		pipeline.addLast("ServerInbound", new HttpServerInboundHandler(executorService));
-
-		/*
-        pipeline.addLast(new HttpRequestDecoder());
-        pipeline.addLast(new HttpResponseEncoder());
-        pipeline.addLast(new HttpContentCompressor());
-        pipeline.addLast(new HttpUploadServerHandler());
-        */
+        
 	}
 
 }

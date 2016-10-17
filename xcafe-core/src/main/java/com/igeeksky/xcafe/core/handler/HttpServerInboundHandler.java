@@ -34,6 +34,10 @@ public class HttpServerInboundHandler extends ChannelInboundHandlerAdapter {
 		this.executorService = executorService;
 	}
 
+	/**
+	 * <b>方法名：</b>预处理并转发请求<br>
+	 * <b>待完善：</b>根据服务器上下文环境，可选择是否交由线程池异步处理业务逻辑
+	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		FullHttpRequest req = (FullHttpRequest)msg;
@@ -51,7 +55,6 @@ public class HttpServerInboundHandler extends ChannelInboundHandlerAdapter {
 				req.content().release();
 			}
 		});
-		
 		
 	}
 	

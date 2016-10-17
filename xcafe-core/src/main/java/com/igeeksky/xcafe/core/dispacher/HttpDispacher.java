@@ -14,6 +14,15 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponse;
 
+/**
+ * <b>类名：</b>请求分发器<br>
+ * <b>功能：</b>根据URL构建请求参数，根据方法类型将请求交给不同的方法处理
+ * @author Tony.Lau
+ * @createTime 2016-10-17 15:25:24
+ * @since 0.9.0
+ * @email coffeelifelau@163.com
+ * @blog<a href="http://blog.csdn.net/coffeelifelau">刘涛的编程笔记</a>
+ */
 public enum HttpDispacher {
 	
 	INSTANCE;

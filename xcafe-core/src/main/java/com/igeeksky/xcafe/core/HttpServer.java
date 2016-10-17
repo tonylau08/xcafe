@@ -35,7 +35,7 @@ public class HttpServer {
 	private static final boolean SSL = System.getProperty("ssl") != null;
 	private static int PORT = Integer.parseInt(System.getProperty("port", SSL? "8443" : "18898"));
     
-	private final int BACKLOG = 128;
+	private final int BACKLOG = 1024;
 	private final int TIMEOUT = 300;
 	private static boolean running = false;
 
@@ -71,15 +71,15 @@ public class HttpServer {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup)
 			 .channel(NioServerSocketChannel.class)
-			 .option(ChannelOption.SO_BACKLOG, BACKLOG)
-			 .option(ChannelOption.SO_RCVBUF, 1024 * 256)
-			 .option(ChannelOption.SO_SNDBUF, 1024 * 256)
-			 .childOption(ChannelOption.SO_KEEPALIVE, true)
-			 .childHandler(new HttpPipelineInitializer(executorService, sslCtx, TIMEOUT));
+			 .option(ChannelOption.SO_BACKLOG, BACKLOG)		//设定最大连接队列
+			 .option(ChannelOption.SO_RCVBUF, 1024 * 256)		//设定数据接收缓冲区大小
+			 .option(ChannelOption.SO_SNDBUF, 1024 * 256)		//设定数据发送缓冲区大小
+			 .childOption(ChannelOption.SO_KEEPALIVE, true)	//是否保持连接
+			 .childHandler(new HttpPipelineInitializer(executorService, sslCtx, TIMEOUT));		//传入附带异步线程池的channelHandler
 
-			Channel channel = b.bind(PORT).sync().channel();
+			Channel channel = b.bind(PORT).sync().channel();	//绑定端口直到绑定完成
 
-			channel.closeFuture().sync();
+			channel.closeFuture().sync();						//阻塞关闭操作
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
