@@ -9,9 +9,9 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-public class FileUtils {
+public class FileUtil {
 	
-	private FileUtils(){}
+	private FileUtil(){}
 	
 	/** 快 */
 	public static void bytesToFile(byte[] bytes, String filePath, String fileName){

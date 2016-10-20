@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.igeeksky.xcafe.util.Assert;
-import com.igeeksky.xcafe.util.StringUtils;
+import com.igeeksky.xcafe.util.StringUtil;
 
 public class FilterDef implements Serializable {
 
@@ -68,7 +68,7 @@ public class FilterDef implements Serializable {
 	}
 
 	public void setFilterName(String filterName) {
-		Assert.isTrue(StringUtils.isNotEmpty(filterName), "filterName must not be null or blank");
+		Assert.isTrue(StringUtil.isNotEmpty(filterName), "filterName must not be null or blank");
 		this.filterName = filterName;
 	}
 

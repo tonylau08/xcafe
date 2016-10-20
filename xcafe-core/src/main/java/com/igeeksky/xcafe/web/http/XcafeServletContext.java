@@ -37,7 +37,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.util.WebUtils;
 
 import com.igeeksky.xcafe.core.context.Context;
-import com.igeeksky.xcafe.util.StringUtils;
+import com.igeeksky.xcafe.util.StringUtil;
 import com.igeeksky.xcafe.web.filter.FilterDef;
 import com.igeeksky.xcafe.web.filter.XcafeFilterRegistration;
 import com.igeeksky.xcafe.web.session.XcafeSessionCookieConfig;
@@ -599,7 +599,7 @@ public class XcafeServletContext implements ServletContext {
 	}
 
 	private FilterRegistration.Dynamic addFilter(String filterName, String filterClass, Filter filter) throws IllegalStateException {
-		Assert.isTrue(StringUtils.isEmpty(filterName), "applicationContext.invalidFilterName");
+		Assert.isTrue(StringUtil.isEmpty(filterName), "applicationContext.invalidFilterName");
 		
 		FilterDef filterDef = context.findFilterDef(filterName);
 		if (filterDef == null) {

@@ -1,8 +1,8 @@
 package com.igeeksky.xcafe.util;
 
-public class StringUtils {
+public class StringUtil {
 	
-	private StringUtils(){}
+	private StringUtil(){}
 	
 	public static boolean isEmpty(String msg){
 		if(null == msg || "".equals(msg)){

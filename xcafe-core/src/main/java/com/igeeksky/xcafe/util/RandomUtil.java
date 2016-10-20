@@ -1,11 +1,9 @@
 package com.igeeksky.xcafe.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class RandomUtils {
+public class RandomUtil {
 	
 	private static final char[] CHARS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
@@ -15,66 +13,61 @@ public class RandomUtils {
 	
 	private static final Random random = new Random();
 	
-	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMddHHmmss");
+	private static String LOCAL_MAC = InetUtil.getLocalMacAddress();
+	private static char[] LOCAL_MAC_CHARS = new char[12];
 	
-	/**
-	 * 如length >= 10，每秒百万随机数不重复
-	 * @param length 如length == 10，总长度 12+10=22位
-	 * @return String 时间字符串 + 指定长度的随机字符串
-	 */
-	public static String getRandomStringByDate(int length){
-		//单线程：1000万 日期格式字符串 + 10位随机数 9547毫秒
-		return SDF.format(new Date())+getRandomString(length);
+	private static int MAC_LENGTH = 0;
+	private static int TIME_LENGTH = 0;
+	private static int TOTAL_LENGTH = 0;
+	
+	static{
+		LOCAL_MAC_CHARS =  LOCAL_MAC.toCharArray();
+		
+		MAC_LENGTH = LOCAL_MAC_CHARS.length;
+		
+		TIME_LENGTH = Long.toHexString(System.currentTimeMillis()).toCharArray().length;
+		
+		TOTAL_LENGTH = MAC_LENGTH * 2 + TIME_LENGTH;
 	}
 	
 	/**
-	 * 构造指定长度的随机字符串
-	 * 据多次测试，长度达到9位，随机产生100万字符串不重复
-	 * @param length
-	 * @return
+	 * <b>方法：</b>生成随机字符串</br>
+	 * <b>说明：</b>MAC地址 + 16进制当前毫秒时间 + 随机字符 间隔排列生成随机字符串，适用于分布式集群。</br>
+	 * <b>长度：</b>MAC地址(12) + 16进制时间(11) + 随机字符(12) = 35</br>
+	 * <b>性能：</b>单线程生成1000万随机字符串约6秒
 	 */
-	public static String getRandomString(int length) {
-		//单线程：1000万 20位随机数 4290毫秒
-		char[] c = new char[length];
-		for (int i = 0; i < length; i++) {
-			int n = random.nextInt(CHARS_SIZE);
-			c[i] = CHARS[n];
+	public static String getRandomString(){
+		char[] rs = new char[TOTAL_LENGTH];
+		char[] time = Long.toHexString(System.currentTimeMillis()).toUpperCase().toCharArray();
+		
+		int index = 0;
+		int n;
+		for(int i=0; i < MAC_LENGTH; i++){
+			rs[index] = LOCAL_MAC_CHARS[i];
+			index++;
+			if(i<TIME_LENGTH){
+				rs[index] = time[i];
+				index++;
+			}
+			n = random.nextInt(CHARS_SIZE);
+			rs[index] = CHARS[n];
+			index++;
 		}
-		return new String(c);
+		
+		return String.copyValueOf(rs);
 	}
 	
 	/**
-	 * 当前系统时间去掉前3位 + 递增序列<br><br>
-	 * <b>注意事项：多台服务器一定要通过不同的配置参数传入不同的机器码</b>
+	 * <b>方法：</b>递增序列字符串<br><br>
+	 * <b>说明：</b>MAC地址 + 16进制当前毫秒时间 + 递增序列 顺序排列生成随机字符串，适用于分布式集群。</br>
+	 * <b>性能：</b>单线程生成1000万随机字符串约5秒
 	 */
-	public static String getLongString(String machineCode){
-		//单线程：1000万 随机数 6535毫秒
+	public static String getIncreamentString(){
 		AINT.compareAndSet(Integer.MAX_VALUE, 0);
-		return machineCode + (System.currentTimeMillis() + String.valueOf(AINT.addAndGet(1))).substring(3);
+		StringBuilder sb = new StringBuilder(LOCAL_MAC);
+		return sb.append(Long.toHexString(System.currentTimeMillis()).toUpperCase()).append(AINT.addAndGet(1)).toString();
 	}
 	
-	/**
-	 * 当前系统时间去掉前3位 + 3位int随机字符串<br><br>
-	 * <b>注意事项：存在重复可能，并发高时需使用递归或while循环判断是否重复</b>
-	 */
-	public static String getLongString(){
-		return (System.currentTimeMillis() + getThreeIntString()).substring(3);
-	}
-	
-	/** 3位int随机字符串 */
-	public static String getThreeIntString(){
-		int value = random.nextInt(1000);
-		if(value==0){
-			return "000";
-		}else if(value>0 && value<10){
-			return "00"+value;
-		}else if(value>=10 && value<100){
-			return "0"+value;
-		}else{
-			return ""+value;
-		}
-	}
-	
-	private RandomUtils(){}
+	private RandomUtil(){}
 
 }

@@ -8,7 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.SessionCookieConfig;
 import javax.servlet.http.HttpSession;
 
-import com.igeeksky.xcafe.util.RandomUtils;
+import com.igeeksky.xcafe.util.RandomUtil;
 
 public enum LocalSessionManager implements SessionManager {
 	
@@ -43,9 +43,9 @@ public enum LocalSessionManager implements SessionManager {
 	
 	@Override
 	public HttpSession build(boolean isNew) {
-		String sid = RandomUtils.getRandomStringByDate(10);
+		String sid = RandomUtil.getRandomString();
 		while(null != map.get(sid)){
-			sid = RandomUtils.getRandomStringByDate(10);
+			sid = RandomUtil.getRandomString();
 		}
 		HttpSession session = new XcafeHttpSession(servletContext, sid);
 		map.put(sid, session);

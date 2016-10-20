@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
 import com.igeeksky.xcafe.util.Assert;
-import com.igeeksky.xcafe.util.StringUtils;
+import com.igeeksky.xcafe.util.StringUtil;
 
 public class XcafeHttpSession implements HttpSession {
 
@@ -126,7 +126,7 @@ public class XcafeHttpSession implements HttpSession {
 
 	@Override
 	public Object getValue(String name) {
-		Assert.notNull(StringUtils.isNotEmpty(name), "Attribute name must not be null");
+		Assert.notNull(StringUtil.isNotEmpty(name), "Attribute name must not be null");
 		return values.get(name);
 	}
 

@@ -15,7 +15,7 @@ import com.igeeksky.xcafe.cache.ResourceCache;
 import com.igeeksky.xcafe.cache.ResourceCacheDefault;
 import com.igeeksky.xcafe.core.context.XcafeCoreContext;
 import com.igeeksky.xcafe.core.tag.ThreadSafe;
-import com.igeeksky.xcafe.util.FileUtils;
+import com.igeeksky.xcafe.util.FileUtil;
 import com.igeeksky.xcafe.web.http.FullHttpRequestWrapper;
 import com.igeeksky.xcafe.web.http.FullHttpResponseWrapper;
 import com.igeeksky.xcafe.web.http.MultipartFullHttpRequestWrapper;
@@ -244,7 +244,7 @@ public enum HttpActionAdapter4Spring implements HttpActionAdapter {
 		byte[] bytes = CACHE.getCache(requestURI);
 		if(null == bytes){
 			InputStream is = this.getClass().getResourceAsStream("/views/public" + requestURI);
-			bytes = FileUtils.inputStreamToBytes(is);
+			bytes = FileUtil.inputStreamToBytes(is);
 			CACHE.putCache(requestURI, bytes);
 		}
 		
